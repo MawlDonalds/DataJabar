@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Hanyarunrun" parent="android:Theme.Material.Light.NoActionBar" />
+
+<!--     Tema khusus SplashScreen Android 12+-->
+<!--    <style name="Theme.Hanyarunrun.Splash" parent="Theme.SplashScreen">-->
+<!--        &lt;!&ndash; Ikon (vector/png) yang muncul di tengah splash screen &ndash;&gt;-->
+<!--        <item name="windowSplashScreenAnimatedIcon">@drawable/logo</item>-->
+<!--        &lt;!&ndash; Warna background splash &ndash;&gt;-->
+<!--        <item name="windowSplashScreenBackground">@color/purple_200</item>-->
+<!--        &lt;!&ndash; Tema yang dipakai setelah splash hilang &ndash;&gt;-->
+<!--        <item name="postSplashScreenTheme">@style/Theme.Hanyarunrun</item>-->
+<!--    </style>-->
+</resources>
