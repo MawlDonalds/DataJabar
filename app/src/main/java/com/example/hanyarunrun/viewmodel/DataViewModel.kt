@@ -3,6 +3,7 @@ package com.example.hanyarunrun.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.hanyarunrun.data.AppDatabase
 import com.example.hanyarunrun.data.DataEntity
@@ -12,7 +13,17 @@ import kotlinx.coroutines.withContext
 
 class DataViewModel(application: Application) : AndroidViewModel(application) {
     private val dao = AppDatabase.getDatabase(application).dataDao()
+
+    private val _rowCount = MutableLiveData<Int>(0)
+    val rowCount: LiveData<Int> = _rowCount
+
+    fun fetchRowCount() {
+        viewModelScope.launch {
+            _rowCount.value = dao.getCount()
+        }
+    }
     val dataList: LiveData<List<DataEntity>> = dao.getAll()
+
 
     fun insertData(
         kodeProvinsi: String,
@@ -37,6 +48,9 @@ class DataViewModel(application: Application) : AndroidViewModel(application) {
                     tahun = tahunValue
                 )
             )
+            withContext(Dispatchers.IO) {
+                _rowCount.postValue(dao.getCount())
+            }
         }
     }
 
@@ -46,9 +60,20 @@ class DataViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+
+    fun deleteData(data: DataEntity) {
+        viewModelScope.launch {
+            dao.delete(data)
+            withContext(Dispatchers.IO) {
+                _rowCount.postValue(dao.getCount())
+            }
+        }
+    }
+
     suspend fun getDataById(id: Int): DataEntity? {
         return withContext(Dispatchers.IO) {
             dao.getById(id)
         }
     }
+
 }
